@@ -1,0 +1,23 @@
+{
+  "name": "vvdev-auth",
+  "version": "1.0.0",
+  "description": "helper auth functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "auth"
+  ],
+  "author": "lol10801lol",
+  "license": "ISC",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lol10801lol/vvdev-auth.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/lol10801lol/vvdev-auth/issues"
+  },
+  "homepage": "https://gitlab.com/lol10801lol/vvdev-auth#README"
+}
