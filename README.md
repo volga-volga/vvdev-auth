@@ -14,5 +14,5 @@ if(auth.checkPassword('hunter2',hashed_and_salted))
 ## Installation
 
 ```
-npm install https://gitlab.com/lol10801lol/vvdev-auth
+npm install --save gitlab:lol10801lol/vvdev-auth
 ```
