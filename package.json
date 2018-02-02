@@ -4,7 +4,7 @@
   "description": "helper auth functions",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/index.js | tap-spec"
   },
   "keywords": [
     "auth"
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://gitlab.com/lol10801lol/vvdev-auth/issues"
   },
-  "homepage": "https://gitlab.com/lol10801lol/vvdev-auth#README"
+  "homepage": "https://gitlab.com/lol10801lol/vvdev-auth#README",
+  "devDependencies": {
+    "tape": "^4.8.0"
+  }
 }
