@@ -6,13 +6,18 @@ Simple auth functions based on crypto that I use in many projects
 
 ```
 const auth = require('vvdev-auth');
-let hashed_and_salted = auth.hashPassword('hunter2');
-if(auth.checkPassword('hunter2',hashed_and_salted))
-    console.log('logged in');
+auth.generatePassword(8, function(err, pass){
+    console.log('your new password:',pass);
+    let hashed_and_salted = auth.hashPassword(pass);
+    if(auth.checkPassword('hunter2',hashed_and_salted))
+        console.log('logged in');
+    else
+        console.log('wrong password!');
+});
 ```
 
 ## Installation
 
 ```
-npm install --save gitlab:lol10801lol/vvdev-auth
+npm install --save vvdev-auth;
 ```

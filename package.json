@@ -1,25 +1,25 @@
 {
   "name": "vvdev-auth",
-  "version": "1.0.0",
-  "description": "helper auth functions",
+  "version": "0.0.3",
+  "description": "hash+salt passwords easy",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/index.js | tap-spec"
+    "test": "node tests/index.js"
   },
   "keywords": [
-    "auth"
+    "auth","crypto","hash","salt"
   ],
   "author": "lol10801lol",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/lol10801lol/vvdev-auth.git"
+    "url": "git+https://github.com/volga-volga/vvdev-auth"
   },
   "bugs": {
-    "url": "https://gitlab.com/lol10801lol/vvdev-auth/issues"
+    "url": "https://github.com/volga-volga/vvdev-auth/issues"
   },
-  "homepage": "https://gitlab.com/lol10801lol/vvdev-auth#README",
+  "homepage": "https://github.com/volga-volga/vvdev-auth",
   "devDependencies": {
     "tape": "^4.8.0"
   }

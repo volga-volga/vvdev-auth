@@ -11,13 +11,25 @@ var password = BASE_PASSWORD;
 var hashedPassword = BASE_HASH;
 
 tape('Generating a password', function(t){
-    auth.genPassword(TEST_BYTES_LENGTH, function(err, buffer){
+    auth.genPassword(TEST_BYTES_LENGTH, function(err, generatedPassword){
         t.equal(err, null);
-        password = buffer.toString('hex');
+        password = generatedPassword;
         console.log(password);
         t.notEqual(password, BASE_PASSWORD);
         t.end();
     });
+});
+tape('Generating a password with promise-based api', function(t){
+    auth.genPassword(TEST_BYTES_LENGTH)
+        .then(function(generatedPassword){
+            password = generatedPassword;
+            console.log(password);
+            t.notEqual(password, BASE_PASSWORD);
+            t.end();
+        })
+        .catch(function(err){
+            t.fail(err);
+        });
 });
 tape('Hashing the generated password', function(t){
     t.notEqual(password, BASE_PASSWORD);
