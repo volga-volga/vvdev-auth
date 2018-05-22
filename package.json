@@ -1,13 +1,16 @@
 {
   "name": "vvdev-auth",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "hash+salt passwords easy",
   "main": "index.js",
   "scripts": {
     "test": "node tests/index.js"
   },
   "keywords": [
-    "auth","crypto","hash","salt"
+    "auth",
+    "crypto",
+    "hash",
+    "salt"
   ],
   "author": "lol10801lol",
   "license": "MIT",
