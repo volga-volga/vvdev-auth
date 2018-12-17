@@ -1,17 +1,14 @@
-/* jshint esversion: 6, node:true */
-/* eslint no-console: true */
-'use strict';
 const tape = require('tape');
 const auth = require('../index');
 
 const TEST_BYTES_LENGTH = 5;
 const BASE_PASSWORD = 'THIS PASSWORD IS NOT GENERATED';
 const BASE_HASH = 'HASHING WENT WRONG';
-var password = BASE_PASSWORD;
-var hashedPassword = BASE_HASH;
+let password = BASE_PASSWORD;
+let hash = BASE_HASH;
 
-tape('Generating a password', function(t){
-    auth.genPassword(TEST_BYTES_LENGTH, function(err, generatedPassword){
+tape('Callback: Generating a password', t => {
+    auth.genPassword(TEST_BYTES_LENGTH, (err, generatedPassword) => {
         t.equal(err, null);
         password = generatedPassword;
         console.log(password);
@@ -19,28 +16,51 @@ tape('Generating a password', function(t){
         t.end();
     });
 });
-tape('Generating a password with promise-based api', function(t){
+tape('Promise: Generating a password', t => {
     auth.genPassword(TEST_BYTES_LENGTH)
-        .then(function(generatedPassword){
+        .then(generatedPassword => {
             password = generatedPassword;
             console.log(password);
             t.notEqual(password, BASE_PASSWORD);
             t.end();
         })
-        .catch(function(err){
+        .catch(err => {
             t.fail(err);
         });
 });
-tape('Hashing the generated password', function(t){
-    t.notEqual(password, BASE_PASSWORD);
-    hashedPassword = auth.hashPassword(password);
-    console.log(hashedPassword);
-    t.notEqual(hashedPassword, BASE_HASH);
-    t.end();
+tape('Callback: Hashing the generated password', function(t){
+    auth.hashPassword(password, (err, hashedPassword) => {
+        t.equal(err, null);
+        console.log(hashedPassword);
+        hash = hashedPassword;
+        t.end();
+    });
 });
-tape('Checking the hashed password', function(t){
-    t.notEqual(password, BASE_PASSWORD);
-    t.notEqual(hashedPassword, BASE_HASH);
-    t.ok(auth.checkPassword(password, hashedPassword));
-    t.end();
+tape('Callback: Checking the hashed password', function(t){
+    auth.checkPassword(password, hash, (err, result) => {
+        t.equal(err, null);
+        t.ok(result);
+        t.end();
+    });
+});
+tape('Promise: Hashing the generated password', function(t){
+    auth.hashPassword(password)
+        .then(hashedPassword => {
+            console.log(hashedPassword);
+            hash = hashedPassword;
+            t.end();
+        })
+        .catch(err => {
+            t.fail(err);
+        });
+});
+tape('Promise: Checking the hashed password', function(t){
+    auth.checkPassword(password, hash)
+        .then(result => {
+            t.ok(result);
+            t.end();
+        })
+        .catch(err => {
+            t.fail(err);
+        });
 });

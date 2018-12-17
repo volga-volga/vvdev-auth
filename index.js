@@ -1,33 +1,57 @@
 const crypto = require('crypto');
-exports.genPassword = function(length, callback){
-    return new Promise(function(resolve, reject){
-        crypto.randomBytes(length, function(err, buffer){
-            if(err)
-            {
+exports.genPassword = (length, callback) => {
+    if(!callback || typeof(callback) !== 'function')
+        callback = new Function();
+    return new Promise((resolve, reject) => {
+        crypto.randomBytes(length, (err, buffer) => {
+            if(err) {
                 reject(err);
-                if(callback && typeof(callback === 'function'))
-                    callback(err);
-            }
-            else 
-            {
-                let password = buffer.toString('hex');
+                callback(err);
+            } else {
+                const password = buffer.toString('hex');
                 resolve(password);
-                if(callback && typeof(callback === 'function'))
-                    callback(null, password);
+                callback(null, password);
             }
         });
     });
 };
 exports.generatePassword = exports.genPassword;
-exports.hashPassword = function(password){
-    let salt = crypto.randomBytes(64).toString('hex');
-    let hash = crypto.createHmac('sha512', salt);
-    hash.update(password);
-    return salt+hash.digest('hex');
+exports.hashPassword = (password, callback) => {
+    if(!callback || typeof(callback) !== 'function')
+        callback = new Function();
+    return new Promise((resolve, reject) => {
+        const salt = crypto.randomBytes(64);
+        crypto.scrypt(password, salt, 64, (err, key) => {
+            if(err) {
+                reject(err);
+                callback(err);
+            } else {
+                const result = Buffer.concat([salt, key]).toString('hex');
+                resolve(result);
+                callback(null, result);
+            }
+        });
+    });
 };
-exports.checkPassword = function(password,hashed_password){
-    let salt = hashed_password.substring(0,128);
-    let hash = crypto.createHmac('sha512', salt);
-    hash.update(password);
-    return (crypto.timingSafeEqual(Buffer.from(salt+hash.digest('hex')),Buffer.from(hashed_password)));
+exports.checkPassword = (password, hash, callback) => {
+    if(!callback || typeof(callback) !== 'function')
+        callback = new Function();
+    return new Promise((resolve, reject) => {
+        const salt = Buffer.from(hash.substring(0,128), 'hex');
+        crypto.scrypt(password, salt, 64, (err, key) => {
+            if(err) {
+                reject(err);
+                callback(err);
+            } else try {
+                const left = key;
+                const right = Buffer.from(hash.substring(128), 'hex');
+                const result = crypto.timingSafeEqual(left, right);
+                resolve(result);
+                callback(null, result);
+            } catch(err) {
+                reject(err);
+                callback(err);
+            }
+        });
+    });
 };

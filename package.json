@@ -1,6 +1,6 @@
 {
   "name": "vvdev-auth",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "hash+salt passwords easy",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "keywords": [
     "auth",
     "crypto",
+    "scrypt",
     "hash",
     "salt"
   ],
@@ -24,6 +25,6 @@
   },
   "homepage": "https://github.com/volga-volga/vvdev-auth",
   "devDependencies": {
-    "tape": "^4.8.0"
+    "tape": "^4.9.1"
   }
 }
