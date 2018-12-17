@@ -1,6 +1,6 @@
 {
   "name": "vvdev-auth",
-  "version": "1.0.0",
+  "version": "",
   "description": "hash+salt passwords easy",
   "main": "index.js",
   "scripts": {

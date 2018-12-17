@@ -1,7 +1,12 @@
 const crypto = require('crypto');
-exports.genPassword = (length, callback) => {
+function makeCallbackFunction(callback)
+{
     if(!callback || typeof(callback) !== 'function')
         callback = new Function();
+    return callback;
+}
+exports.genPassword = (length, callback) => {
+    callback = makeCallbackFunction(callback);
     return new Promise((resolve, reject) => {
         crypto.randomBytes(length, (err, buffer) => {
             if(err) {
@@ -17,8 +22,7 @@ exports.genPassword = (length, callback) => {
 };
 exports.generatePassword = exports.genPassword;
 exports.hashPassword = (password, callback) => {
-    if(!callback || typeof(callback) !== 'function')
-        callback = new Function();
+    callback = makeCallbackFunction(callback);
     return new Promise((resolve, reject) => {
         const salt = crypto.randomBytes(64);
         crypto.scrypt(password, salt, 64, (err, key) => {
@@ -34,8 +38,7 @@ exports.hashPassword = (password, callback) => {
     });
 };
 exports.checkPassword = (password, hash, callback) => {
-    if(!callback || typeof(callback) !== 'function')
-        callback = new Function();
+    callback = makeCallbackFunction(callback);
     return new Promise((resolve, reject) => {
         const salt = Buffer.from(hash.substring(0,128), 'hex');
         crypto.scrypt(password, salt, 64, (err, key) => {
